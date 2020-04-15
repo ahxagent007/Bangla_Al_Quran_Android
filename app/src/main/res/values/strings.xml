@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Bangla Al-Quran</string>
+    <string name="app_name_bangla">বাংলা আল-কুরআন</string>
+
+    <string name="bismillah_arabic">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</string>
+    <string name="bismillah_bangla">বিছমিল্লাহির রাহমানির রাহিম।</string>
+    <string name="bismillah_bangla_meaning">শুরু করছি আল্লাহর নামে যিনি পরম করুণাময়, অতি দয়ালু।</string>
+
+    <string name="all_sura">সকল সূরা</string>
+    <string name="namaz_time">নামাজের সময়সূচী</string>
+    <string name="website">ওয়েবসাইট</string>
+    <string name="search">অনু সন্ধান করুন</string>
+    <string name="start_reading">পড়া শুরু করুন</string>
+    <string name="help_us">আমাদের সাহায্য করুন</string>
+
+</resources>
