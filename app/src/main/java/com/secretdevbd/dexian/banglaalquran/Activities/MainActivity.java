@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         btn_helpus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                WEBSITE("https://www.secretdevbd.com/Xian");
+                WEBSITE("https://www.secretdevbd.com/CV/Xian");
             }
         });
 

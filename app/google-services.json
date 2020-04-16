@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "527781654997",
+    "firebase_url": "https://bangla-al-quran.firebaseio.com",
+    "project_id": "bangla-al-quran",
+    "storage_bucket": "bangla-al-quran.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:527781654997:android:9554efd4d9fc8b1b5ecd5c",
+        "android_client_info": {
+          "package_name": "com.secretdevbd.dexian.banglaalquran"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "527781654997-cm6mt4o25e4jv4cvlnfjgm45mvj5ctvr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.secretdevbd.dexian.banglaalquran",
+            "certificate_hash": "121cc30f2b9c5482887812af6035902cb16e5522"
+          }
+        },
+        {
+          "client_id": "527781654997-guc3phao1eos1m73gohbh6nck8vnm27j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBw8Wyab3z7f2esid1hysr_mojVNjaxAN4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "527781654997-guc3phao1eos1m73gohbh6nck8vnm27j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

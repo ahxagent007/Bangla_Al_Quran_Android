@@ -122,15 +122,15 @@ public class NamazActivity extends AppCompatActivity {
                                 TV_time_zone.setText(responseNamazTime.getData().getMeta().getTimezone());
 
                                 try {
-                                    TV_Fajr.setText(Format12.format(Format24.parse(responseNamazTime.getData().getTimings().getFajr())));
-                                    TV_Duhr.setText(Format12.format(Format24.parse(responseNamazTime.getData().getTimings().getDhuhr())));
-                                    TV_Asr.setText(Format12.format(Format24.parse(responseNamazTime.getData().getTimings().getAsr())));
-                                    TV_Maghrib.setText(Format12.format(Format24.parse(responseNamazTime.getData().getTimings().getMaghrib())));
-                                    TV_Isha.setText(Format12.format(Format24.parse(responseNamazTime.getData().getTimings().getIsha())));
-                                    TV_Imsak.setText(Format12.format(Format24.parse(responseNamazTime.getData().getTimings().getImsak())));
-                                    TV_Sunrise.setText(Format12.format(Format24.parse(responseNamazTime.getData().getTimings().getSunrise())));
-                                    TV_Sunset.setText(Format12.format(Format24.parse(responseNamazTime.getData().getTimings().getSunset())));
-                                    TV_Midnight.setText(Format12.format(Format24.parse(responseNamazTime.getData().getTimings().getMidnight())));
+                                    TV_Fajr.setText(Format12.format(Format24.parse(responseNamazTime.getData().getTimings().getFajr())).toUpperCase());
+                                    TV_Duhr.setText(Format12.format(Format24.parse(responseNamazTime.getData().getTimings().getDhuhr())).toUpperCase());
+                                    TV_Asr.setText(Format12.format(Format24.parse(responseNamazTime.getData().getTimings().getAsr())).toUpperCase());
+                                    TV_Maghrib.setText(Format12.format(Format24.parse(responseNamazTime.getData().getTimings().getMaghrib())).toUpperCase());
+                                    TV_Isha.setText(Format12.format(Format24.parse(responseNamazTime.getData().getTimings().getIsha())).toUpperCase());
+                                    TV_Imsak.setText(Format12.format(Format24.parse(responseNamazTime.getData().getTimings().getImsak())).toUpperCase());
+                                    TV_Sunrise.setText(Format12.format(Format24.parse(responseNamazTime.getData().getTimings().getSunrise())).toUpperCase());
+                                    TV_Sunset.setText(Format12.format(Format24.parse(responseNamazTime.getData().getTimings().getSunset())).toUpperCase());
+                                    TV_Midnight.setText(Format12.format(Format24.parse(responseNamazTime.getData().getTimings().getMidnight())).toUpperCase());
                                 } catch (ParseException e) {
                                     e.printStackTrace();
                                 }
