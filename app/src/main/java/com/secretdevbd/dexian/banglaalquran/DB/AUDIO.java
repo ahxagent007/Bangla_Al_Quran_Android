@@ -31,4 +31,13 @@ public class AUDIO {
     public void setText(String text) {
         this.text = text;
     }
+
+    @Override
+    public String toString() {
+        return "AUDIO{" +
+                "aya=" + aya +
+                ", sura=" + sura +
+                ", text='" + text + '\'' +
+                '}';
+    }
 }

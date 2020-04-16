@@ -31,4 +31,13 @@ public class ARABIC {
     public void setText(String text) {
         this.text = text;
     }
+
+    @Override
+    public String toString() {
+        return "ARABIC{" +
+                "aya=" + aya +
+                ", sura=" + sura +
+                ", text='" + text + '\'' +
+                '}';
+    }
 }

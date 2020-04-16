@@ -62,11 +62,17 @@ public class SplashScreenActivity extends AppCompatActivity {
         t.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                PB_loadingBar.setProgress(prog);
-                prog++;
-                Log.i(TAG, "Prog : "+prog);
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        PB_loadingBar.setProgress(prog);
+                        prog++;
+                        Log.i(TAG, "Prog : "+prog);
+                    }
+                });
+
             }
-        }, 0, 3333);
+        }, 0, 3000);
 
 
     }
@@ -153,29 +159,64 @@ public class SplashScreenActivity extends AppCompatActivity {
                         Log.i(TAG,"Response : "+msg);
 
                         Gson g = new Gson();
-                        ResponseDB responseDB = g.fromJson(msg, ResponseDB.class);
+                        final ResponseDB responseDB = g.fromJson(msg, ResponseDB.class);
 
                         if(responseDB.getStatus() == 1){
-                            DatabaseHandler databaseHandler = new DatabaseHandler(getApplicationContext());
-                            databaseHandler.addAllArabic(responseDB.getData().getARABIC());
-                            databaseHandler.addAllAudio(responseDB.getData().getAUDIO());
-                            databaseHandler.addAllBangla(responseDB.getData().getBANGLA());
-                            databaseHandler.addAllNames(responseDB.getData().getNAMES());
-                            databaseHandler.addAllPronunciation(responseDB.getData().getPRO());
+                            final DatabaseHandler databaseHandler = new DatabaseHandler(getApplicationContext());
 
+                            new Thread(new Runnable() {
+                                public void run() {
+                                    // a potentially time consuming task
+                                    databaseHandler.addAllBangla(responseDB.getData().getBANGLA());
+                                }
+                            }).start();
+                            new Thread(new Runnable() {
+                                public void run() {
+                                    // a potentially time consuming task
+                                    databaseHandler.addAllArabic(responseDB.getData().getARABIC());
+                                }
+                            }).start();
+
+                            new Thread(new Runnable() {
+                                public void run() {
+                                    // a potentially time consuming task
+                                    databaseHandler.addAllAudio(responseDB.getData().getAUDIO());
+                                }
+                            }).start();
+                            new Thread(new Runnable() {
+                                public void run() {
+                                    // a potentially time consuming task
+                                    databaseHandler.addAllNames(responseDB.getData().getNAMES());
+                                }
+                            }).start();
+                            new Thread(new Runnable() {
+                                public void run() {
+                                    // a potentially time consuming task
+                                    databaseHandler.addAllPronunciation(responseDB.getData().getPRO());
+
+                                }
+                            }).start();
+
+                            new SharedPreffClass(getApplicationContext()).setDLstatus(""+responseDB.getStatus());
+
+                            new Handler().postDelayed(new Runnable(){
+                                @Override
+                                public void run() {
+                                    PB_loadingBar.setProgress(100);
+                                    PB_loading.setVisibility(View.INVISIBLE);
+                                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                    finish();
+                                }
+                            }, 1000*300);
+
+                        }else{
+                            PB_loadingBar.setProgress(100);
+                            PB_loading.setVisibility(View.INVISIBLE);
+                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            finish();
                         }
 
-                        new SharedPreffClass(getApplicationContext()).setDLstatus(""+responseDB.getStatus());
-                        PB_loadingBar.setProgress(100);
-                        PB_loading.setVisibility(View.INVISIBLE);
 
-                        new Handler().postDelayed(new Runnable(){
-                            @Override
-                            public void run() {
-                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                                finish();
-                            }
-                        }, 500);
 
 
                     }

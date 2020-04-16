@@ -65,8 +65,25 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         db.execSQL("DELETE FROM arabic1;");
     }
+    public void deleteAudio() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        db.execSQL("DELETE FROM audio;");
+    }
+    public void deleteBangla() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        db.execSQL("DELETE FROM bangla1;");
+    }
+    public void deleteNames() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        db.execSQL("DELETE FROM names;");
+    }
+    public void deletepronunciation() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        db.execSQL("DELETE FROM pronunciation;");
+    }
 
     public boolean addAllArabic (ArrayList<ARABIC> arabics) {
+        this.deleteArabic();
 
         SQLiteDatabase db = this.getWritableDatabase();
         for(int i=0; i<arabics.size(); i++){
@@ -76,7 +93,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             contentValues.put("aya", arabics.get(i).getAya());
             contentValues.put("text", arabics.get(i).getText());
 
-            //Log.i(TAG, arabics.get(i).toString());
+            Log.i(TAG, arabics.get(i).toString());
 
             db.insert("arabic1", null, contentValues);
         }
@@ -84,6 +101,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return true;
     }
     public boolean addAllBangla (ArrayList<BANGLA> banglas) {
+        this.deleteBangla();
 
         SQLiteDatabase db = this.getWritableDatabase();
         for(int i=0; i<banglas.size(); i++){
@@ -93,7 +111,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             contentValues.put("aya", banglas.get(i).getAya());
             contentValues.put("text", banglas.get(i).getText());
 
-            //Log.i(TAG, banglas.get(i).toString());
+            Log.i(TAG, banglas.get(i).toString());
 
             db.insert("bangla1", null, contentValues);
         }
@@ -101,6 +119,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return true;
     }
     public boolean addAllAudio (ArrayList<AUDIO> audio) {
+        this.deleteAudio();
 
         SQLiteDatabase db = this.getWritableDatabase();
         for(int i=0; i<audio.size(); i++){
@@ -110,7 +129,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             contentValues.put("aya", audio.get(i).getAya());
             contentValues.put("text", audio.get(i).getText());
 
-            //Log.i(TAG, audio.get(i).toString());
+            Log.i(TAG, audio.get(i).toString());
 
             db.insert("audio", null, contentValues);
         }
@@ -118,6 +137,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return true;
     }
     public boolean addAllPronunciation (ArrayList<PRO> pros) {
+        this.deletepronunciation();
 
         SQLiteDatabase db = this.getWritableDatabase();
         for(int i=0; i<pros.size(); i++){
@@ -127,7 +147,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             contentValues.put("aya", pros.get(i).getAya());
             contentValues.put("text", pros.get(i).getText());
 
-            //Log.i(TAG, pros.get(i).toString());
+            Log.i(TAG, pros.get(i).toString());
 
             db.insert("pronunciation", null, contentValues);
         }
@@ -135,6 +155,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return true;
     }
     public boolean addAllNames (ArrayList<NAMES> names) {
+        this.deleteNames();
 
         SQLiteDatabase db = this.getWritableDatabase();
         for(int i=0; i<names.size(); i++){
@@ -143,7 +164,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             contentValues.put("sura", names.get(i).getSura());
             contentValues.put("text", names.get(i).getText());
 
-            //Log.i(TAG, names.get(i).toString());
+            Log.i(TAG, names.get(i).toString());
 
             db.insert("names", null, contentValues);
         }
