@@ -1,17 +1,17 @@
 package com.secretdevbd.dexian.banglaalquran.DB;
 
 public class ResponseDB {
-    data data;
+    dataa data;
     int status;
 
     public ResponseDB() {
     }
 
-    public com.secretdevbd.dexian.banglaalquran.DB.data getData() {
+    public dataa getData() {
         return data;
     }
 
-    public void setData(com.secretdevbd.dexian.banglaalquran.DB.data data) {
+    public void setData(dataa data) {
         this.data = data;
     }
 

@@ -12,7 +12,7 @@ import com.secretdevbd.dexian.banglaalquran.R;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button btn_startReading, btn_allSura, btn_namazTime, btn_website, btn_helpus;
+    Button btn_startReading, btn_namazTime, btn_website, btn_helpus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +20,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         btn_startReading = findViewById(R.id.btn_startReading);
-        btn_allSura = findViewById(R.id.btn_allSura);
         btn_namazTime = findViewById(R.id.btn_namazTime);
         btn_website = findViewById(R.id.btn_website);
         btn_helpus = findViewById(R.id.btn_helpus);
@@ -31,35 +30,30 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(),StartReadingActivity.class));
             }
         });
-        btn_allSura.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-            }
-        });
         btn_namazTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                startActivity(new Intent(getApplicationContext(),NamazActivity.class));
             }
         });
         btn_website.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                WEBSITE();
+                WEBSITE("http://antor.kitsware.com/quran/");
             }
         });
         btn_helpus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                WEBSITE("https://www.secretdevbd.com/Xian");
             }
         });
 
     }
 
-    private void WEBSITE(){
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://antor.kitsware.com/quran/"));
+    private void WEBSITE(String URL){
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(URL));
         startActivity(browserIntent);
     }
 }

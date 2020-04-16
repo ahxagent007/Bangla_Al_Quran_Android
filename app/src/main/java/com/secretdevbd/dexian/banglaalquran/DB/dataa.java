@@ -2,14 +2,14 @@ package com.secretdevbd.dexian.banglaalquran.DB;
 
 import java.util.ArrayList;
 
-public class data {
+public class dataa {
     ArrayList<ARABIC> ARABIC = new ArrayList<ARABIC>();
     ArrayList<BANGLA> BANGLA = new ArrayList<BANGLA>();
     ArrayList<NAMES> NAMES = new ArrayList<NAMES>();
     ArrayList<PRO> PRO = new ArrayList<PRO>();
     ArrayList<AUDIO> AUDIO = new ArrayList<AUDIO>();
 
-    public data() {
+    public dataa() {
     }
 
     public ArrayList<com.secretdevbd.dexian.banglaalquran.DB.AUDIO> getAUDIO() {

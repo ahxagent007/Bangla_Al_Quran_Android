@@ -15,4 +15,18 @@
 
     <string name="next_sura">পরবর্তী সূরা</string>
 
+    <string name="date">তারিখ :</string>
+    <string name="date_hijri">হিজরি তারিখ :</string>
+    <string name="time_zone">টাইম জোন :</string>
+
+    <string name="Fajr">ফজর</string>
+    <string name="Sunrise">সূর্যদয়</string>
+    <string name="Dhuhr">যোহর </string>
+    <string name="Asr">আসর</string>
+    <string name="Sunset">সূর্যাস্ত</string>
+    <string name="Maghrib">মাগরিব</string>
+    <string name="Isha">ইশা</string>
+    <string name="Imsak">তাহাজ্জুদ</string>
+    <string name="Midnight">মধ্যরাত্রি</string>
+
 </resources>

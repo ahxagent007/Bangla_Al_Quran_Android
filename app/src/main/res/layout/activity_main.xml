@@ -60,7 +60,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:weightSum="5"
+        android:weightSum="4"
         android:gravity="center">
 
         <Button
@@ -74,16 +74,6 @@
             android:layout_margin="20dp"
             android:textColor="@color/white"/>
 
-        <Button
-            android:id="@+id/btn_allSura"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textSize="20dp"
-            android:text="@string/all_sura"
-            android:background="@drawable/pressed_green"
-            android:layout_margin="20dp"
-            android:textColor="@color/white"/>
 
         <Button
             android:id="@+id/btn_namazTime"
