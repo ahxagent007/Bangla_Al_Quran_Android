@@ -11,5 +11,9 @@
     <color name="lite_grey">#C0C0C0</color>
     <color name="green">#008000</color>
     <color name="lime_green">#32CD32</color>
+    <color name="dark_green">#006400</color>
+    <color name="dark_blue">#0000A0</color>
+    <color name="dark_purple">#301934</color>
+    <color name="lite_purple">#B961C9</color>
 
 </resources>

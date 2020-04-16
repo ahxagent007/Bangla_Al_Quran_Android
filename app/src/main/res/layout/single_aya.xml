@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/lite_grey"
+    android:layout_margin="10dp"
+    android:padding="5dp">
+
+    <TextView
+        android:id="@+id/TV_arabic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="25dp"
+        android:text="@string/bismillah_arabic"
+        android:gravity="right"
+        android:textColor="@color/black"
+        android:padding="5dp"/>
+
+    <TextView
+        android:id="@+id/TV_pro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:text="@string/bismillah_bangla"
+        android:gravity="left"
+        android:textColor="@color/dark_blue"
+        android:padding="5dp"/>
+
+    <TextView
+        android:id="@+id/TV_bangla"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18dp"
+        android:text="@string/bismillah_bangla_meaning"
+        android:gravity="left"
+        android:textColor="@color/green"
+        android:padding="5dp"/>
+
+</LinearLayout>

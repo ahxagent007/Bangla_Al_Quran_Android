@@ -172,11 +172,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return true;
     }
 
-    public ArrayList<ARABIC> getAllArabic() {
+    public ArrayList<ARABIC> getAllArabicBySura(int sura) {
         ArrayList<ARABIC> arabics = new ArrayList<ARABIC>();
 
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res =  db.rawQuery( "select * from arabic1", null );
+        Cursor res =  db.rawQuery( "select * from arabic1 WHERE sura = "+sura+" ORDER BY aya ASC", null );
         res.moveToFirst();
 
         while(res.isAfterLast() == false){
@@ -191,11 +191,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return arabics;
     }
 
-    public ArrayList<AUDIO> getAllAudio() {
+    public ArrayList<AUDIO> getAllAudioBySura(int sura) {
         ArrayList<AUDIO> audios = new ArrayList<AUDIO>();
 
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res =  db.rawQuery( "select * from arabic1", null );
+        Cursor res =  db.rawQuery( "select * from audio WHERE sura = "+sura+" ORDER BY aya ASC", null );
         res.moveToFirst();
 
         while(res.isAfterLast() == false){
@@ -210,11 +210,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return audios;
     }
 
-    public ArrayList<BANGLA> getAllBangla() {
+    public ArrayList<BANGLA> getAllBanglaBySura(int sura) {
         ArrayList<BANGLA> arabics = new ArrayList<BANGLA>();
 
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res =  db.rawQuery( "select * from arabic1", null );
+        Cursor res =  db.rawQuery( "select * from bangla1 WHERE sura = "+sura+" ORDER BY aya ASC", null );
         res.moveToFirst();
 
         while(res.isAfterLast() == false){
@@ -229,29 +229,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return arabics;
     }
 
-    public ArrayList<NAMES> getAllNames() {
-        ArrayList<NAMES> names = new ArrayList<NAMES>();
 
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res =  db.rawQuery( "select * from arabic1", null );
-        res.moveToFirst();
 
-        while(res.isAfterLast() == false){
-            NAMES arabic = new NAMES();
-            arabic.setSura(Integer.parseInt(res.getString(res.getColumnIndex("sura"))));
-            arabic.setText(res.getString(res.getColumnIndex("text")));
-            names.add(arabic);
-
-            res.moveToNext();
-        }
-        return names;
-    }
-
-    public ArrayList<PRO> getAllPronunciation() {
+    public ArrayList<PRO> getAllPronunciationBySura(int sura) {
         ArrayList<PRO> pros = new ArrayList<PRO>();
 
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res =  db.rawQuery( "select * from arabic1", null );
+        Cursor res =  db.rawQuery( "select * from pronunciation WHERE sura = "+sura+" ORDER BY aya ASC", null );
         res.moveToFirst();
 
         while(res.isAfterLast() == false){
@@ -264,6 +248,24 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             res.moveToNext();
         }
         return pros;
+    }
+
+    public ArrayList<NAMES> getAllNames() {
+        ArrayList<NAMES> names = new ArrayList<NAMES>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res =  db.rawQuery( "select * from names", null );
+        res.moveToFirst();
+
+        while(res.isAfterLast() == false){
+            NAMES arabic = new NAMES();
+            arabic.setSura(Integer.parseInt(res.getString(res.getColumnIndex("sura"))));
+            arabic.setText(res.getString(res.getColumnIndex("text")));
+            names.add(arabic);
+
+            res.moveToNext();
+        }
+        return names;
     }
 
 

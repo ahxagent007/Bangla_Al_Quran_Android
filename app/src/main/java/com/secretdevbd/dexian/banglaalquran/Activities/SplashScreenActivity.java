@@ -207,7 +207,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
                                     finish();
                                 }
-                            }, 1000*300);
+                            }, 1000*250);
 
                         }else{
                             PB_loadingBar.setProgress(100);
