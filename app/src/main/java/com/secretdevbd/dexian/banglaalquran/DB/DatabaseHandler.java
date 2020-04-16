@@ -61,6 +61,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    public void deleteArabic() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        db.execSQL("DELETE FROM arabic1;");
+    }
+
     public boolean addAllArabic (ArrayList<ARABIC> arabics) {
 
         SQLiteDatabase db = this.getWritableDatabase();
@@ -70,6 +75,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             contentValues.put("sura", arabics.get(i).getSura());
             contentValues.put("aya", arabics.get(i).getAya());
             contentValues.put("text", arabics.get(i).getText());
+
+            //Log.i(TAG, arabics.get(i).toString());
 
             db.insert("arabic1", null, contentValues);
         }
@@ -86,6 +93,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             contentValues.put("aya", banglas.get(i).getAya());
             contentValues.put("text", banglas.get(i).getText());
 
+            //Log.i(TAG, banglas.get(i).toString());
+
             db.insert("bangla1", null, contentValues);
         }
 
@@ -100,6 +109,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             contentValues.put("sura", audio.get(i).getSura());
             contentValues.put("aya", audio.get(i).getAya());
             contentValues.put("text", audio.get(i).getText());
+
+            //Log.i(TAG, audio.get(i).toString());
 
             db.insert("audio", null, contentValues);
         }
@@ -116,6 +127,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             contentValues.put("aya", pros.get(i).getAya());
             contentValues.put("text", pros.get(i).getText());
 
+            //Log.i(TAG, pros.get(i).toString());
+
             db.insert("pronunciation", null, contentValues);
         }
 
@@ -129,6 +142,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             ContentValues contentValues = new ContentValues();
             contentValues.put("sura", names.get(i).getSura());
             contentValues.put("text", names.get(i).getText());
+
+            //Log.i(TAG, names.get(i).toString());
 
             db.insert("names", null, contentValues);
         }

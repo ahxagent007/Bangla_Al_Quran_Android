@@ -63,6 +63,13 @@
         android:layout_height="50dp"
         android:layout_margin="20dp"/>
 
+    <ProgressBar
+        android:id="@+id/PB_loadingBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
+
 
 
 
