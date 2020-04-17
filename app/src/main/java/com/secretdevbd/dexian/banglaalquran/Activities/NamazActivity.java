@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -148,7 +149,7 @@ public class NamazActivity extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         // error
                         Log.i(TAG, "simpleRequestForNamazTime : "+error);
-                        Log.i(TAG, ""+error.networkResponse.statusCode);
+                        Toast.makeText(getApplicationContext(),"No Internet", Toast.LENGTH_LONG).show();
                     }
                 }
         ) {

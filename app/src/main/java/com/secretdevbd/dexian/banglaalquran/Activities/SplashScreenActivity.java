@@ -225,7 +225,12 @@ public class SplashScreenActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.i(TAG,"jsonRequest ERROR :"+error.toString());
-                        Toast.makeText(getApplicationContext(),"Try again later", Toast.LENGTH_LONG).show();
+                        if(new SharedPreffClass(getApplicationContext()).getDLstatus().equalsIgnoreCase("1")){
+                            PB_loadingBar.setProgress(100);
+                            PB_loading.setVisibility(View.INVISIBLE);
+                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            finish();
+                        }
                     }
                 }
         );
