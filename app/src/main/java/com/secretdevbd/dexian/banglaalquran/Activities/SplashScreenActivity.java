@@ -2,8 +2,10 @@ package com.secretdevbd.dexian.banglaalquran.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -25,11 +27,15 @@ import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.secretdevbd.dexian.banglaalquran.DB.DatabaseHandler;
 import com.secretdevbd.dexian.banglaalquran.DB.ResponseDB;
+import com.secretdevbd.dexian.banglaalquran.DB.ResponseDBBB;
+import com.secretdevbd.dexian.banglaalquran.DB.SURAA;
+import com.secretdevbd.dexian.banglaalquran.DB.Sura;
 import com.secretdevbd.dexian.banglaalquran.R;
 import com.secretdevbd.dexian.banglaalquran.SharedPreffClass;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
@@ -72,7 +78,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                 });
 
             }
-        }, 0, 3000);
+        }, 0, 2500);
 
 
     }
@@ -97,11 +103,11 @@ public class SplashScreenActivity extends AppCompatActivity {
 
                         DatabaseHandler databaseHandler = new DatabaseHandler(getApplicationContext());
 
-                        databaseHandler.addAllArabic(responseDB.getData().getARABIC());
+                        /*databaseHandler.addAllArabic(responseDB.getData().getARABIC());
                         databaseHandler.addAllAudio(responseDB.getData().getAUDIO());
                         databaseHandler.addAllBangla(responseDB.getData().getBANGLA());
                         databaseHandler.addAllNames(responseDB.getData().getNAMES());
-                        databaseHandler.addAllPronunciation(responseDB.getData().getPRO());
+                        databaseHandler.addAllPronunciation(responseDB.getData().getPRO());*/
 
                         PB_loading.setVisibility(View.INVISIBLE);
 
@@ -139,13 +145,14 @@ public class SplashScreenActivity extends AppCompatActivity {
 
     private void jsonRequest(){
 
-        String URL = "https://quran.secretdevbd.com/Quran";
+        String URL = "https://quran.secretdevbd.com/al_quran_json";
 
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
 
         Map<String, String> jsonParams = new HashMap<String, String>();
 
         jsonParams.put("version",new SharedPreffClass(getApplicationContext()).getDLstatus());
+        //jsonParams.put("version",""+0);
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.POST,
@@ -159,12 +166,45 @@ public class SplashScreenActivity extends AppCompatActivity {
                         Log.i(TAG,"Response : "+msg);
 
                         Gson g = new Gson();
-                        final ResponseDB responseDB = g.fromJson(msg, ResponseDB.class);
+                        final ResponseDBBB responseDBBB = g.fromJson(msg, ResponseDBBB.class);
 
-                        if(responseDB.getStatus() == 1){
+
+                        if(responseDBBB.getStatus() == 1){
+
+                            Log.i(TAG, responseDBBB.getData().getSURA().size()+" |");
+
+                            final ArrayList<SURAA> suras = responseDBBB.getData().getSURA();
+
                             final DatabaseHandler databaseHandler = new DatabaseHandler(getApplicationContext());
 
                             new Thread(new Runnable() {
+                                public void run() {
+                                    databaseHandler.addAllSURA2(suras);
+                                }
+                            }).start();
+
+                            new Thread(new Runnable() {
+                                public void run() {
+                                    // a potentially time consuming task
+                                    databaseHandler.addAllNames(responseDBBB.getData().getNAMES());
+                                }
+                            }).start();
+
+
+                            new SharedPreffClass(getApplicationContext()).setDLstatus(""+responseDBBB.getStatus());
+
+                            new Handler().postDelayed(new Runnable(){
+                                @Override
+                                public void run() {
+                                    PB_loadingBar.setProgress(100);
+                                    PB_loading.setVisibility(View.INVISIBLE);
+                                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                    finish();
+                                }
+                            }, 10000);
+
+
+                            /*new Thread(new Runnable() {
                                 public void run() {
                                     // a potentially time consuming task
                                     databaseHandler.addAllBangla(responseDB.getData().getBANGLA());
@@ -207,7 +247,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
                                     finish();
                                 }
-                            }, 1000*250);
+                            }, 200000);*/
 
                         }else{
                             PB_loadingBar.setProgress(100);
@@ -230,6 +270,9 @@ public class SplashScreenActivity extends AppCompatActivity {
                             PB_loading.setVisibility(View.INVISIBLE);
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
                             finish();
+                        }else{
+                            restartActivity(SplashScreenActivity.this);
+
                         }
                     }
                 }
@@ -237,6 +280,15 @@ public class SplashScreenActivity extends AppCompatActivity {
 
 
         requestQueue.add(jsonObjectRequest);
+    }
+
+    public static void restartActivity(Activity activity){
+        if (Build.VERSION.SDK_INT >= 11) {
+            activity.recreate();
+        } else {
+            activity.finish();
+            activity.startActivity(activity.getIntent());
+        }
     }
 
     @Override

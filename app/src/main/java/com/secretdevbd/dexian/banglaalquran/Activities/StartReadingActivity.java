@@ -23,6 +23,8 @@ import com.secretdevbd.dexian.banglaalquran.DB.BANGLA;
 import com.secretdevbd.dexian.banglaalquran.DB.DatabaseHandler;
 import com.secretdevbd.dexian.banglaalquran.DB.NAMES;
 import com.secretdevbd.dexian.banglaalquran.DB.PRO;
+import com.secretdevbd.dexian.banglaalquran.DB.SURAA;
+import com.secretdevbd.dexian.banglaalquran.DB.Sura;
 import com.secretdevbd.dexian.banglaalquran.R;
 import com.secretdevbd.dexian.banglaalquran.SharedPreffClass;
 
@@ -68,9 +70,19 @@ public class StartReadingActivity extends AppCompatActivity {
 
         SP_sura.setSelection(CURRENT_SURA - 1);
 
-        ArrayList<ARABIC> arabics = DB.getAllArabicBySura(CURRENT_SURA);
+        SURAA sura = DB.getSURAByno(CURRENT_SURA);
+
+        /*ArrayList<ARABIC> arabics = sura.getArabics();
+        ArrayList<BANGLA> banglas = sura.getBanglas();
+        ArrayList<PRO> pros = sura.getPros();*/
+
+        ArrayList<String> arabics = sura.getARABIC();
+        ArrayList<String> banglas = sura.getBANGLA();
+        ArrayList<String> pros = sura.getPRO();
+
+        /*ArrayList<ARABIC> arabics = DB.getAllArabicBySura(CURRENT_SURA);
         ArrayList<BANGLA> banglas = DB.getAllBanglaBySura(CURRENT_SURA);
-        ArrayList<PRO> pros = DB.getAllPronunciationBySura(CURRENT_SURA);
+        ArrayList<PRO> pros = DB.getAllPronunciationBySura(CURRENT_SURA);*/
 
         Log.i(TAG, "SIZE : "+arabics.size());
 
@@ -129,9 +141,18 @@ public class StartReadingActivity extends AppCompatActivity {
 
                 SP_sura.setSelection(CURRENT_SURA - 1);
 
-                ArrayList<ARABIC> arabics = DB.getAllArabicBySura(CURRENT_SURA);
+                SURAA sura = DB.getSURAByno(CURRENT_SURA);
+
+                ArrayList<String> arabics = sura.getARABIC();
+                ArrayList<String> banglas = sura.getBANGLA();
+                ArrayList<String> pros = sura.getPRO();
+                /*ArrayList<ARABIC> arabics = sura.getArabics();
+                ArrayList<BANGLA> banglas = sura.getBanglas();
+                ArrayList<PRO> pros = sura.getPros();*/
+
+                /*ArrayList<ARABIC> arabics = DB.getAllArabicBySura(CURRENT_SURA);
                 ArrayList<BANGLA> banglas = DB.getAllBanglaBySura(CURRENT_SURA);
-                ArrayList<PRO> pros = DB.getAllPronunciationBySura(CURRENT_SURA);
+                ArrayList<PRO> pros = DB.getAllPronunciationBySura(CURRENT_SURA);*/
 
                 //RecyclerView
                 RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
@@ -153,10 +174,18 @@ public class StartReadingActivity extends AppCompatActivity {
                 }
                 //
                 //Log.i(TAG, "SP_sura.setOnItemSelected");
+                SURAA sura = DB.getSURAByno(CURRENT_SURA);
 
-                ArrayList<ARABIC> arabics = DB.getAllArabicBySura(CURRENT_SURA);
+                ArrayList<String> arabics = sura.getARABIC();
+                ArrayList<String> banglas = sura.getBANGLA();
+                ArrayList<String> pros = sura.getPRO();
+                /*ArrayList<ARABIC> arabics = sura.getArabics();
+                ArrayList<BANGLA> banglas = sura.getBanglas();
+                ArrayList<PRO> pros = sura.getPros();*/
+
+                /*ArrayList<ARABIC> arabics = DB.getAllArabicBySura(CURRENT_SURA);
                 ArrayList<BANGLA> banglas = DB.getAllBanglaBySura(CURRENT_SURA);
-                ArrayList<PRO> pros = DB.getAllPronunciationBySura(CURRENT_SURA);
+                ArrayList<PRO> pros = DB.getAllPronunciationBySura(CURRENT_SURA);*/
 
                 //RecyclerView
                 RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
@@ -183,12 +212,12 @@ public class StartReadingActivity extends AppCompatActivity {
     public class RecycleViewAdapterForAyats extends RecyclerView.Adapter<RecycleViewAdapterForAyats.ViewHolder> {
 
 
-        ArrayList<ARABIC> arabics;
-        ArrayList<BANGLA> banglas;
-        ArrayList<PRO> pros;
+        ArrayList<String> arabics;
+        ArrayList<String> banglas;
+        ArrayList<String> pros;
         Context context;
 
-        public RecycleViewAdapterForAyats(Context context, ArrayList<ARABIC> arabics, ArrayList<BANGLA> banglas, ArrayList<PRO> pros) {
+        public RecycleViewAdapterForAyats(Context context, ArrayList<String> arabics, ArrayList<String> banglas, ArrayList<String> pros) {
             super();
             this.context = context;
             this.arabics = arabics;
@@ -210,9 +239,9 @@ public class StartReadingActivity extends AppCompatActivity {
         public void onBindViewHolder(RecycleViewAdapterForAyats.ViewHolder viewHolder, final int i) {
 
 
-            viewHolder.TV_arabic.setText("("+(i+1)+") "+arabics.get(i).getText());
-            viewHolder.TV_bangla.setText("("+(i+1)+") "+banglas.get(i).getText());
-            viewHolder.TV_pro.setText("("+(i+1)+") "+pros.get(i).getText());
+            viewHolder.TV_arabic.setText("("+(i+1)+") "+arabics.get(i));
+            viewHolder.TV_bangla.setText("("+(i+1)+") "+banglas.get(i));
+            viewHolder.TV_pro.setText("("+(i+1)+") "+pros.get(i));
 
 
             viewHolder.setClickListener(new ItemClickListener() {

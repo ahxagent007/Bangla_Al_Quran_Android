@@ -12,6 +12,7 @@ import android.util.Log;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,7 +21,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     String TAG = "XIAN";
 
-    public static final String DATABASE_NAME = "bangla_quran.db";
+    public static final String DATABASE_NAME = "bangla_al_quran.db";
 
 
 
@@ -32,7 +33,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         // TODO Auto-generated method stub
 
-        db.execSQL(
+        /*db.execSQL(
                 "create table arabic1 (sura integer, aya integer, text text);"
         );
         db.execSQL(
@@ -40,12 +41,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         );
         db.execSQL(
                 "create table bangla1 (sura integer, aya integer, text text);"
-        );
+        );*/
         db.execSQL(
                 "create table names (sura integer, text text);"
         );
-        db.execSQL(
+        /*db.execSQL(
                 "create table pronunciation (sura integer, aya integer, text text);"
+        );*/
+        db.execSQL(
+                "create table SURA (sura_no integer, arabic_json text, bangla_json text, pro_json text, audio_json text);"
         );
 
     }
@@ -58,6 +62,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS names");
         db.execSQL("DROP TABLE IF EXISTS pronunciation");
         db.execSQL("DROP TABLE IF EXISTS audio");
+        db.execSQL("DROP TABLE IF EXISTS SURA");
         onCreate(db);
     }
 
@@ -80,6 +85,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void deletepronunciation() {
         SQLiteDatabase db = this.getReadableDatabase();
         db.execSQL("DELETE FROM pronunciation;");
+    }
+
+    public void deleteSURA() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        db.execSQL("DELETE FROM SURA;");
     }
 
     public boolean addAllArabic (ArrayList<ARABIC> arabics) {
@@ -154,6 +164,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         return true;
     }
+
     public boolean addAllNames (ArrayList<NAMES> names) {
         this.deleteNames();
 
@@ -167,6 +178,51 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             Log.i(TAG, names.get(i).toString());
 
             db.insert("names", null, contentValues);
+        }
+
+        return true;
+    }
+    public boolean addAllSURA (ArrayList<Sura> suras) {
+        this.deleteSURA();
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Gson gson = new Gson();
+
+        for(int i=0; i<suras.size(); i++){
+
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("sura_no", suras.get(i).getSura_no());
+            contentValues.put("arabic_json", gson.toJson(suras.get(i).getArabics()));
+            contentValues.put("bangla_json", gson.toJson(suras.get(i).getBanglas()));
+            contentValues.put("pro_json", gson.toJson(suras.get(i).getPros()));
+            contentValues.put("audio_json", gson.toJson(suras.get(i).getAudio()));
+
+            Log.i(TAG, suras.get(i).toString());
+
+            db.insert("SURA", null, contentValues);
+        }
+
+        return true;
+    }
+
+    public boolean addAllSURA2 (ArrayList<SURAA> suras) {
+        this.deleteSURA();
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Gson gson = new Gson();
+
+        for(int i=0; i<suras.size(); i++){
+
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("sura_no", suras.get(i).getSura_no());
+            contentValues.put("arabic_json", gson.toJson(suras.get(i).getARABIC()));
+            contentValues.put("bangla_json", gson.toJson(suras.get(i).getBANGLA()));
+            contentValues.put("pro_json", gson.toJson(suras.get(i).getPRO()));
+            contentValues.put("audio_json", gson.toJson(suras.get(i).getAUDIO()));
+
+            Log.i(TAG, suras.get(i).toString());
+
+            db.insert("SURA", null, contentValues);
         }
 
         return true;
@@ -190,7 +246,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
         return arabics;
     }
-
     public ArrayList<AUDIO> getAllAudioBySura(int sura) {
         ArrayList<AUDIO> audios = new ArrayList<AUDIO>();
 
@@ -209,7 +264,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
         return audios;
     }
-
     public ArrayList<BANGLA> getAllBanglaBySura(int sura) {
         ArrayList<BANGLA> arabics = new ArrayList<BANGLA>();
 
@@ -228,9 +282,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
         return arabics;
     }
-
-
-
     public ArrayList<PRO> getAllPronunciationBySura(int sura) {
         ArrayList<PRO> pros = new ArrayList<PRO>();
 
@@ -249,6 +300,59 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
         return pros;
     }
+
+    public SURAA getSURAByno(int sura_no) {
+        SURAA sura = new SURAA();
+
+        Gson gson = new Gson();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res =  db.rawQuery( "select * from SURA WHERE sura_no = "+sura_no, null );
+        res.moveToFirst();
+
+        while(res.isAfterLast() == false){
+
+            sura.setSura_no(Integer.parseInt(res.getString(res.getColumnIndex("sura_no"))));
+            sura.setARABIC(gson.fromJson(res.getString(res.getColumnIndex("arabic_json")), ArrayList.class));
+            sura.setBANGLA(gson.fromJson(res.getString(res.getColumnIndex("bangla_json")), ArrayList.class));
+            sura.setPRO(gson.fromJson(res.getString(res.getColumnIndex("pro_json")), ArrayList.class));
+            sura.setAUDIO(gson.fromJson(res.getString(res.getColumnIndex("audio_json")), ArrayList.class));
+
+            res.moveToNext();
+        }
+        return sura;
+    }
+
+    public Sura getSURAByno2(int sura_no) {
+        Sura sura = new Sura();
+
+        Gson gson = new Gson();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res =  db.rawQuery( "select * from SURA WHERE sura_no = "+sura_no, null );
+        res.moveToFirst();
+
+        while(res.isAfterLast() == false){
+            sura.setSura_no(Integer.parseInt(res.getString(res.getColumnIndex("sura_no"))));
+            sura.setArabics(new ArrayList<ARABIC>(Arrays.asList(gson.fromJson(res.getString(res.getColumnIndex("arabic_json")), ARABIC[].class)))); //gson.fromJson(res.getString(res.getColumnIndex("arabic_json")), ArrayList.class)
+            sura.setBanglas(gson.fromJson(res.getString(res.getColumnIndex("bangla_json")), BANGLA_LIST.class).getBangla_json());
+            sura.setPros(gson.fromJson(res.getString(res.getColumnIndex("pro_json")), ArrayList.class));
+            sura.setAudio(gson.fromJson(res.getString(res.getColumnIndex("audio_json")), ArrayList.class));
+            //new ArrayList<ARABIC>(Arrays.asList(gson.fromJson(res.getString(res.getColumnIndex("arabic_json")), ARABIC[].class)))
+
+            for(int i=0; i<sura.getArabics().size(); i++){
+                Log.i(TAG, sura.getArabics().get(i).getText());
+            }
+
+            for(int i=0; i<sura.getBanglas().size(); i++){
+                Log.i(TAG, sura.getBanglas().get(i).getText());
+            }
+
+            res.moveToNext();
+        }
+        return sura;
+    }
+
 
     public ArrayList<NAMES> getAllNames() {
         ArrayList<NAMES> names = new ArrayList<NAMES>();

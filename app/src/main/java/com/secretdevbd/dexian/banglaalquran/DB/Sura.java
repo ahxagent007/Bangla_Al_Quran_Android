@@ -8,8 +8,17 @@ public class Sura {
     ArrayList<ARABIC> arabics = new ArrayList<ARABIC>();
     ArrayList<BANGLA> banglas = new ArrayList<BANGLA>();
     ArrayList<PRO> pros = new ArrayList<PRO>();
+    ArrayList<AUDIO> audio = new ArrayList<AUDIO>();
 
     public Sura() {
+    }
+
+    public ArrayList<AUDIO> getAudio() {
+        return audio;
+    }
+
+    public void setAudio(ArrayList<AUDIO> audio) {
+        this.audio = audio;
     }
 
     public int getSura_no() {
@@ -42,5 +51,16 @@ public class Sura {
 
     public void setPros(ArrayList<PRO> pros) {
         this.pros = pros;
+    }
+
+    @Override
+    public String toString() {
+        return "Sura{" +
+                "sura_no=" + sura_no +
+                ", arabics=" + arabics +
+                ", banglas=" + banglas +
+                ", pros=" + pros +
+                ", audio=" + audio +
+                '}';
     }
 }

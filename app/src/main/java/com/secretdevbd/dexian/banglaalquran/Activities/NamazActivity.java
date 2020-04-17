@@ -1,11 +1,13 @@
 package com.secretdevbd.dexian.banglaalquran.Activities;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.PermissionChecker;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -80,10 +82,10 @@ public class NamazActivity extends AppCompatActivity {
                 public void run() {
                     simpleRequestForNamazTime();
                 }
-            }, 200);
+            }, 1000);
 
         }else {
-            finish();
+
         }
     }
 
@@ -171,7 +173,7 @@ public class NamazActivity extends AppCompatActivity {
         queue.add(postRequest);
     }
 
-    int PERMISSIONS_REQUEST_LOC = 99;
+    final int PERMISSIONS_REQUEST_LOC = 99;
     private boolean checkPhonePermission() {
 
         if (Build.VERSION.SDK_INT >= 23) {
@@ -182,17 +184,19 @@ public class NamazActivity extends AppCompatActivity {
                 Log.i(TAG, "NO LOCATION PERMISSION");
 
                 new AlertDialog.Builder(this)
-                        .setTitle("Location Permission")
-                        .setMessage("We need your permission to run the app")
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        .setTitle("লোকেশান পারমিশন প্রয়োজন ")
+                        .setMessage("নামাযের সঠিক সময়সূচী জানতে আপনাকে আপনার মোবাইল এর লোকেশান পারমিশন দেয়া লাগবে ")
+                        .setPositiveButton("ঠিক আছে", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 //Prompt the user once explanation has been shown
 
                                 ActivityCompat.requestPermissions(NamazActivity.this,
                                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSIONS_REQUEST_LOC);
+
                             }
                         })
+                        .setCancelable(false)
                         .create()
                         .show();
 
@@ -220,6 +224,55 @@ public class NamazActivity extends AppCompatActivity {
         }
 
         return false;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSIONS_REQUEST_LOC: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    if (Build.VERSION.SDK_INT >= 23) {
+                        if (ContextCompat.checkSelfPermission(this,
+                                Manifest.permission.ACCESS_FINE_LOCATION)
+                                == PackageManager.PERMISSION_GRANTED) {
+                            restartActivity(NamazActivity.this);
+                        }
+                    }else{
+                        int permissionLocation = PermissionChecker.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION);
+
+                        if (permissionLocation == PermissionChecker.PERMISSION_GRANTED) {
+                            Log.i(TAG, "ALL PERMISSION OK");
+                            restartActivity(NamazActivity.this);
+                        }
+                    }
+
+
+
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                    //Toast.makeText(getApplicationContext(), "LOCATION PERMISSION DENIED", Toast.LENGTH_LONG).show();
+
+                }
+                return;
+            }
+
+        }
+    }
+
+
+    public static void restartActivity(Activity activity){
+        if (Build.VERSION.SDK_INT >= 11) {
+            activity.recreate();
+        } else {
+            activity.finish();
+            activity.startActivity(activity.getIntent());
+        }
     }
 
     private void generateLocation(){
