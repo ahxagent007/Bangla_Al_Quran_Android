@@ -295,6 +295,7 @@ public class SplashScreenActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         t.cancel();
+        //screenOFF();
     }
 
     protected PowerManager.WakeLock mWakeLock;
