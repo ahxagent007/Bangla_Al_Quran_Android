@@ -8,10 +8,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.PowerManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -47,6 +50,8 @@ public class StartReadingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_reading);
+
+        screenOn();
 
         SP_sura = findViewById(R.id.SP_sura);
         RV_ayats = findViewById(R.id.RV_ayats);
@@ -294,5 +299,38 @@ public class StartReadingActivity extends AppCompatActivity {
             }
         }
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        screenOFF();
+    }
+
+    protected PowerManager.WakeLock mWakeLock;
+    private void screenOn(){
+
+        final Window window = this.getWindow();
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
+                window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+                window.addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
+            }
+        });
+
+
+        final PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        this.mWakeLock = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "MyApp::MyWakelockTag");
+        this.mWakeLock.acquire();
+    }
+
+
+    private void screenOFF(){
+        final PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        this.mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MyApp::MyWakelockTag");
+        this.mWakeLock.acquire();
     }
 }
